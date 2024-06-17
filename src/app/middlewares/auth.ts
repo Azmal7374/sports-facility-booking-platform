@@ -17,7 +17,7 @@ const auth = (...roles: string[]) => {
 
       // checking  token is in the right format
       if (tokenSplit.length !== 2 || tokenSplit[0] !== 'Bearer') {
-        throw new Error('Invalid token format');
+        throw new Error('Please Provide Valid Token Format');
       }
 
       // Extract the token from the token parts
