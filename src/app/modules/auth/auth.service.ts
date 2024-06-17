@@ -6,22 +6,27 @@ import { createToken } from './auth.utils';
 import config from '../../config';
 
 const login = async (payload: TLoginUser) => {
-  const user = await UserModel.findOne({ email: payload.email })
+  const user = await UserModel.findOne({ email: payload.email }).select(
+    '+password',
+  );
 
-  if(!user) {
-    throw new Error('User not found!!');
+  if (!user) {
+    throw new Error('User not found !');
   }
+
+  //checking if the password is correct
 
   const matchPassword = await bcrypt.compare(
     payload.password,
     user.password as string,
   );
 
-  if(!matchPassword) {
-    throw new Error('Password is not match');
+  if (!matchPassword) {
+    throw new Error('Wrong Password !');
   }
 
-  
+  //create token and send to the  client
+
   const jwtPayload: JwtPayload = {
     email: user.email,
     role: user.role,
@@ -33,14 +38,14 @@ const login = async (payload: TLoginUser) => {
     config.access_token_expires_in as string,
   );
 
-  const userData = await  UserModel.findOne({email:payload.email});
+  const userData = await UserModel.findOne({ email: payload.email });
 
   return {
     accessToken,
-    userData
-  }
- 
+    userData,
+  };
 };
+ 
 
 export const AuthServices = {
   login,
