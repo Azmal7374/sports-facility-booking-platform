@@ -8,18 +8,18 @@ const router = express.Router();
 
 router.post(
   '/',
-//   auth('user'),
+  //   auth('user'),
   validateRequest(validateBooking.createBookingValidationSchema),
   BookingControllers.createBooking,
 );
 
+router.get('/', auth('admin'), BookingControllers.viewAllBookings);
 
+router.delete('/:id', auth('user'), BookingControllers.cancelBooking);
 
-router.delete('/:id',);
+router.get('/check-availability');
+router.get('/');
 
-router.get('/check-availability',);
-router.get('/',);
-
-router.get('/user',);
+router.get('/user', auth('user'), BookingControllers.viewAllBookingsByUser);
 
 export const BookingRoutes = router;
