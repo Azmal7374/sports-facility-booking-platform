@@ -84,7 +84,21 @@ const cancelBooking: RequestHandler = async (req, res, next) => {
   };
   
 const checkAvailability: RequestHandler = async (req, res, next) => {
+    try {
+        const result = await BookingServices.checkAvailabilityInToDB(
+          req.query.date as string,
+        );
+
+        sendResponse(res ,{
+            success: true,
+            statusCode: 200,
+            message: 'Availability checked successfully!!',
+            data: result,
+        })
     
+      } catch (error) {
+        next(error);
+      }
   };
 
 
