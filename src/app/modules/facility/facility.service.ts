@@ -11,12 +11,21 @@ const createFacilityFromDB = async (payload: TFacility) => {
   };
   
 
-  const updateFacilityInToDB = async () => {
-   
+  const updateFacilityInToDB =async (id: string, payload:Partial<TFacility>) => {
+    const result = await FacilityModel.findOneAndUpdate(
+      {_id: id},
+      {$set: payload},
+      {next: true , runValidators:true}
+    )
+
+    if (!result) {
+      throw new Error("Facility Not Found!!")
+    }
+    return result
   };
   
-  const deleteFacilityFromDB = async (id: string) => {
-    
+  const deleteFacilityFromDB = async () => {
+     
   };
   
   const getAllFacilityInToDB = async () => {

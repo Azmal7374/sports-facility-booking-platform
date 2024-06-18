@@ -13,8 +13,22 @@ const CreateFacilityvalidationSchema = z.object({
 });
 
 
+const  UpdateFacilityvalidationSchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+    description: z.string().optional(),
+    pricePerHour: z
+      .number()
+      .positive('Price per hour must be a positive number')
+      .optional(),
+    location: z.string().optional(),
+    isDeleted: z.boolean().default(false).optional(),
+  }),
+});
+
 
 
 export const Facilityvalidation = {
-    CreateFacilityvalidationSchema 
+    CreateFacilityvalidationSchema,
+    UpdateFacilityvalidationSchema 
   };

@@ -15,7 +15,9 @@ router.post(
   );
   
   router.put(
-    '/:id'
+    '/:id',
+    validateRequest(Facilityvalidation.UpdateFacilityvalidationSchema),
+    FacilityControllers.updateFacility,
   );
   
   router.delete('/:id',);
