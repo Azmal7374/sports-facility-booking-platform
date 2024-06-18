@@ -16,6 +16,7 @@ router.post(
   
   router.put(
     '/:id',
+    auth('admin'),
     validateRequest(Facilityvalidation.UpdateFacilityvalidationSchema),
     FacilityControllers.updateFacility,
   );
