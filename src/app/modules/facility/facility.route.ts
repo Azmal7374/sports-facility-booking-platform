@@ -21,7 +21,7 @@ router.post(
     FacilityControllers.updateFacility,
   );
   
-  router.delete('/:id',);
+  router.delete('/:id',auth('admin'),FacilityControllers.deleteFacility);
   
   router.get('/',FacilityControllers.getAllFacility);
   

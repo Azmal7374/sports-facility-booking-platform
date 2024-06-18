@@ -38,12 +38,19 @@ const updateFacility: RequestHandler = async (req, res, next) => {
 
 const deleteFacility: RequestHandler = async (req, res, next) => {
 
-  // try {
-     
+  try {
+     const result = await FacilityServices.deleteFacilityFromDB(req.params.id);
+     sendResponse(res, {
+      success:true,
+      statusCode:200,
+    message:'Facilities Deleted successfully!!',
+    data: result,
+     })
 
-  // }catch(error){
-  //   next(error);
-  // }
+     
+  }catch(error){
+    next(error);
+  }
 };
 
 const getAllFacility: RequestHandler = async (req, res, next) => {
