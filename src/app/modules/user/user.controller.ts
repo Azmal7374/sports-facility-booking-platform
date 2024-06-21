@@ -10,7 +10,7 @@ const createUser: RequestHandler = async (req, res, next) => {
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: 'User Created succesfully',
+        message: 'User registered successfully',
         data: result,
       });
   } catch (error) {

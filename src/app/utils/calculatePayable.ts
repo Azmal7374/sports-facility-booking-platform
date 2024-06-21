@@ -1,37 +1,39 @@
-const calculatePayable = (
+const payableAmountCalculate = (
     endTime: string,
     startTime: string,
     pricePerHour: number,
   ): number => {
-    const today = new Date();
+    const presentDay = new Date();
   
-    const startParts = startTime.split(':');
-    const endParts = endTime.split(':');
+    //time divide two partss
+    const startTimeParts = startTime.split(':');
+    const endTimeParts = endTime.split(':');
   
-    // Parse the start and end times
-    const start = new Date(today);
-    start.setHours(parseInt(startParts[0]), parseInt(startParts[1]), 0, 0);
+    // start time Parse
+    const start = new Date(presentDay);
+    start.setHours(parseInt(startTimeParts[0]), parseInt(startTimeParts[1]), 0, 0);
   
-    const end = new Date(today);
-    end.setHours(parseInt(endParts[0]), parseInt(endParts[1]), 0, 0);
+    // End time Parse
+    const end = new Date(presentDay);
+    end.setHours(parseInt(endTimeParts[0]), parseInt(endTimeParts[1]), 0, 0);
   
-    // Check if the parsed dates are valid
+    // parse date validity checking
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       throw new Error('Invalid start time or end time');
     }
   
-    // Calculate the duration in hours
-    const durationInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+    // calculate duration per hourse
+    const durationTime = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
   
-    // Check if the duration is valid
-    if (durationInHours < 0) {
+    
+    if (durationTime < 0) {
       throw new Error('End time must be bigger than start time');
     }
   
-    // Calculate the payable amount
-    const payableAmount = durationInHours * pricePerHour;
+    // total payable amount calculate
+    const totalPayableAmount = durationTime * pricePerHour;
   
-    return payableAmount;
+    return totalPayableAmount;
   };
   
-  export default calculatePayable;
+export default payableAmountCalculate;
