@@ -5,8 +5,6 @@ import { UserControllers } from '../user/user.controller';
 import { AuthValidation } from './auth.validation';
 import { AuthControllers } from './auth.controller';
 
-
-
 const router = express.Router();
 
 router.post(

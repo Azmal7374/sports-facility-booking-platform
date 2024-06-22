@@ -13,7 +13,4 @@ const createUserValidation = z.object({
   }),
 });
 
-
-
-
-export const validateUser = { createUserValidation};
+export const validateUser = { createUserValidation };

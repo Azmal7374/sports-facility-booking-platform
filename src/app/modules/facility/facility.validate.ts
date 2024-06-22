@@ -4,16 +4,13 @@ const CreateFacilityvalidationSchema = z.object({
   body: z.object({
     name: z.string(),
     description: z.string(),
-    pricePerHour: z
-      .number()
-      .positive('please provide positive number'),
+    pricePerHour: z.number().positive('please provide positive number'),
     location: z.string(),
     isDeleted: z.boolean().default(false),
   }),
 });
 
-
-const  UpdateFacilityvalidationSchema = z.object({
+const UpdateFacilityvalidationSchema = z.object({
   body: z.object({
     name: z.string().optional(),
     description: z.string().optional(),
@@ -26,9 +23,7 @@ const  UpdateFacilityvalidationSchema = z.object({
   }),
 });
 
-
-
 export const Facilityvalidation = {
-    CreateFacilityvalidationSchema,
-    UpdateFacilityvalidationSchema 
-  };
+  CreateFacilityvalidationSchema,
+  UpdateFacilityvalidationSchema,
+};

@@ -26,10 +26,10 @@ const createBookingFromDB = async (payload: TBooking, user: JwtPayload) => {
   for (const booking of bookings) {
     const startTimeInBookings = moment(booking.startTime, 'HH:mm');
     const endTimeInBookings = moment(booking.endTime, 'HH:mm');
-     
+
     const timeMatching =
-    startRequesteTime.isBefore(endTimeInBookings) &&
-    endReuesteTime.isAfter(startTimeInBookings);
+      startRequesteTime.isBefore(endTimeInBookings) &&
+      endReuesteTime.isAfter(startTimeInBookings);
     //check request time slot already matched
     if (timeMatching) {
       throw new Error('The requested time slot is already booked!');
@@ -68,7 +68,7 @@ const viewAllBookingsByUserFromDB = async (user: JwtPayload) => {
 };
 
 const checkAvailabilityInToDB = async (dateFromQuery: string) => {
-  //set the  date 
+  //set the  date
   const dates = dateFromQuery || moment().format('YYYY-MM-DD');
   const date = dates;
 
@@ -81,7 +81,7 @@ const checkAvailabilityInToDB = async (dateFromQuery: string) => {
   const endDay = moment('00:00', 'HH:mm');
   //   console.log(startDay)
   //   console.log(endDay)
-   //booking arranged
+  //booking arranged
   const bookingsSorted = bookings.sort((a, b) =>
     moment(a.startTime, 'HH:mm').diff(moment(b.startTime, 'HH:mm')),
   );

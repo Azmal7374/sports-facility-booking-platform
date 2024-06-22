@@ -29,8 +29,6 @@ const deleteFacilityFromDB = async (id: string) => {
     { new: true, runValidators: true },
   );
 
-  
-
   if (!result) {
     throw new Error('Facility Not Found!!');
   }

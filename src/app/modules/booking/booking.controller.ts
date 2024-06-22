@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import sendResponse from '../../utils/sendResponse';
 import { BookingServices } from './booking.service';
+import httpStatus from 'http-status';
 
 const createBooking: RequestHandler = async (req, res, next) => {
   try {
@@ -10,8 +11,8 @@ const createBooking: RequestHandler = async (req, res, next) => {
     );
 
     sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      statusCode: 200,
       message: 'Booking Created Successfully!!',
       data: result,
     });
@@ -34,7 +35,7 @@ const viewAllBookings: RequestHandler = async (req, res, next) => {
     }
     sendResponse(res, {
       success: true,
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       message: 'Bookings retrieved succesfully',
       data: result,
     });
@@ -57,7 +58,7 @@ const viewAllBookingsByUser: RequestHandler = async (req, res, next) => {
     }
     sendResponse(res, {
       success: true,
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       message: 'Bookings retrieved succesfully',
       data: result,
     });
@@ -72,7 +73,7 @@ const cancelBooking: RequestHandler = async (req, res, next) => {
 
     sendResponse(res, {
       success: true,
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       message: 'Booking cancelled succesfully!!',
       data: result,
     });
@@ -89,7 +90,7 @@ const checkAvailability: RequestHandler = async (req, res, next) => {
 
     sendResponse(res, {
       success: true,
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       message: 'Availability checked successfully!!',
       data: result,
     });

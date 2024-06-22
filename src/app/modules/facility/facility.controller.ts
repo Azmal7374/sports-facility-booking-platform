@@ -8,75 +8,68 @@ const createFacility: RequestHandler = async (req, res, next) => {
     const result = await FacilityServices.createFacilityFromDB(req.body);
 
     sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Facility added succesfully',
-        data: result,
-      });
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Facility added succesfully',
+      data: result,
+    });
   } catch (error) {
     next(error);
   }
 };
 
 const updateFacility: RequestHandler = async (req, res, next) => {
-  
-  try{
+  try {
     const result = await FacilityServices.updateFacilityInToDB(
       req.params.id,
-      req.body
+      req.body,
     );
     sendResponse(res, {
-      success:true,
-     statusCode:200,
-   message:'Facilities Updated successfully!!',
-   data: result,
-    })
-  }catch (error) {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Facilities Updated successfully!!',
+      data: result,
+    });
+  } catch (error) {
     next(error);
   }
 };
 
 const deleteFacility: RequestHandler = async (req, res, next) => {
-
   try {
-     const result = await FacilityServices.deleteFacilityFromDB(req.params.id);
+    const result = await FacilityServices.deleteFacilityFromDB(req.params.id);
     //  console.log(result);
-     sendResponse(res, {
-      success:true,
-      statusCode:200,
-    message:'Facilities Deleted successfully!!',
-    data: result,
-     })
-
-     
-  }catch(error){
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Facilities Deleted successfully!!',
+      data: result,
+    });
+  } catch (error) {
     next(error);
   }
 };
 
 const getAllFacility: RequestHandler = async (req, res, next) => {
-
- try{
-  const result = await FacilityServices.getAllFacilityInToDB()
-  if (result.length === 0){
-   sendResponse(res,{
-     statusCode: 404,
-     success: true,
-     message: 'No Data Found',
-     data: result,
-   })
+  try {
+    const result = await FacilityServices.getAllFacilityInToDB();
+    if (result.length === 0) {
+      sendResponse(res, {
+        statusCode: 404,
+        success: true,
+        message: 'No Data Found',
+        data: result,
+      });
+    }
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Facilities retrieved successfully',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
   }
-sendResponse(res, {
- success:true,
-   statusCode:200,
-   message:'Facilities retrieved successfully',
-   data: result,
-});
-
- } catch (err) {
-  next(err)
-
- }
 };
 
 export const FacilityControllers = {

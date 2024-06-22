@@ -45,7 +45,6 @@ const login = async (payload: TLoginUser) => {
     userData,
   };
 };
- 
 
 export const AuthServices = {
   login,
