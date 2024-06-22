@@ -40,6 +40,7 @@ const deleteFacility: RequestHandler = async (req, res, next) => {
 
   try {
      const result = await FacilityServices.deleteFacilityFromDB(req.params.id);
+    //  console.log(result);
      sendResponse(res, {
       success:true,
       statusCode:200,

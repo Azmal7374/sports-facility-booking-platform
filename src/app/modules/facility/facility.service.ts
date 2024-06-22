@@ -26,12 +26,10 @@ const deleteFacilityFromDB = async (id: string) => {
   const result = await FacilityModel.findOneAndUpdate(
     { _id: id },
     { isDeleted: true },
-    { next: true, runValidators: true },
+    { new: true, runValidators: true },
   );
 
-  if (result?.isDeleted) {
-    throw new Error('Facility is Already Deleted!!');
-  }
+  
 
   if (!result) {
     throw new Error('Facility Not Found!!');

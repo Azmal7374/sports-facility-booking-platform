@@ -6,7 +6,7 @@ const CreateFacilityvalidationSchema = z.object({
     description: z.string(),
     pricePerHour: z
       .number()
-      .positive('Price per hour must be a positive number'),
+      .positive('please provide positive number'),
     location: z.string(),
     isDeleted: z.boolean().default(false),
   }),
@@ -19,7 +19,7 @@ const  UpdateFacilityvalidationSchema = z.object({
     description: z.string().optional(),
     pricePerHour: z
       .number()
-      .positive('Price per hour must be a positive number')
+      .positive('please provide positive number')
       .optional(),
     location: z.string().optional(),
     isDeleted: z.boolean().default(false).optional(),
