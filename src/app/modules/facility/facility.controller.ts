@@ -53,22 +53,34 @@ const deleteFacility: RequestHandler = async (req, res, next) => {
 const getAllFacility: RequestHandler = async (req, res, next) => {
   try {
     const result = await FacilityServices.getAllFacilityInToDB();
-    if (result.length === 0) {
-      sendResponse(res, {
-        statusCode: 404,
-        success: true,
-        message: 'No Data Found',
-        data: result,
-      });
-    }
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Facilities retrieved successfully',
+    return res.status(result.length === 0 ? 404 : 200).json({
+      success: result.length === 0 ? false : true,
+      statusCode: result.length === 0 ? 404 : 200,
+      message:
+        result.length === 0
+          ? 'No Data Found'
+          : 'Facilities retrieved successfully',
       data: result,
     });
   } catch (err) {
     next(err);
+  }
+};
+
+const getSingleFacilityDetails: RequestHandler = async (req, res, next) => {
+  try {
+    const result = await FacilityServices.getSingleFacilityDetailsInToDB(
+      req.params.id,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Facilities Details Retrive successfully!!',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -77,4 +89,5 @@ export const FacilityControllers = {
   updateFacility,
   deleteFacility,
   getAllFacility,
+  getSingleFacilityDetails,
 };
