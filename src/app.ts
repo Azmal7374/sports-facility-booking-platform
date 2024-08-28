@@ -7,7 +7,7 @@ const app: Application = express();
 
 app.use(express.json());
 app.use(cors());
-
+app.use(cors({ origin:'http://localhost:5173', credentials: true}));
 // application routes
 app.use('/api', router);
 

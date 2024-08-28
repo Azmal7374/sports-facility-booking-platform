@@ -1,9 +1,10 @@
 import { TLoginUser } from './auth.interface';
-import { UserModel } from '../user/user.model';
 import bcrypt from 'bcrypt';
-import { JwtPayload } from 'jsonwebtoken';
 import { createToken } from './auth.utils';
 import config from '../../config';
+import { JwtPayload } from 'jsonwebtoken';
+import { UserModel } from '../user/user.model';
+import { verifyToken } from '../../utils/VerifyToken';
 
 const login = async (payload: TLoginUser) => {
   const user = await UserModel.findOne({ email: payload.email }).select(
@@ -14,8 +15,6 @@ const login = async (payload: TLoginUser) => {
     throw new Error('User not found !');
   }
 
-  //checking if the password is correct
-
   const matchPassword = await bcrypt.compare(
     payload.password,
     user.password as string,
@@ -25,7 +24,6 @@ const login = async (payload: TLoginUser) => {
     throw new Error('Wrong Password !');
   }
 
-  //create token and send to the  client
 
   const jwtPayload: JwtPayload = {
     email: user.email,
@@ -46,6 +44,26 @@ const login = async (payload: TLoginUser) => {
   };
 };
 
+const refreshToken = async (token: string) => {
+  const decoded = verifyToken(token, config.jwt_refresh_token_secret as string);
+
+  const jwtPayload = {
+    email: decoded.email,
+    role: decoded.role,
+  };
+
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_acess_token_secret as string,
+    config.access_token_expires_in as string,
+  );
+
+  return {
+    accessToken,
+  };
+};
+
 export const AuthServices = {
   login,
+  refreshToken,
 };

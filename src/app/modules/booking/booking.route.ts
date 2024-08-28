@@ -15,12 +15,12 @@ router.post(
 
 router.get('/', auth('admin'), BookingControllers.viewAllBookings);
 
+router.get('/user', auth('user'), BookingControllers.viewAllBookingsByUser);
+
 router.delete('/:id', auth('user'), BookingControllers.cancelBooking);
 
 router.get('/check-availability', BookingControllers.checkAvailability);
 
-router.get('/');
 
-router.get('/user', auth('user'), BookingControllers.viewAllBookingsByUser);
 
 export const BookingRoutes = router;
