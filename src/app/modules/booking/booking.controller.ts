@@ -9,7 +9,6 @@ const createBooking: RequestHandler = async (req, res, next) => {
       req.body,
       req.user,
     );
-
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -25,18 +24,13 @@ const viewAllBookings: RequestHandler = async (req, res, next) => {
   try {
     const result = await BookingServices.viewAllBookingsFromDB();
 
-    if (result.length === 0) {
-      sendResponse(res, {
-        success: false,
-        statusCode: 404,
-        message: 'No Data Found',
-        data: [],
-      });
-    }
-    sendResponse(res, {
+    return res.status(200).json({
       success: true,
-      statusCode: httpStatus.OK,
-      message: 'Bookings retrieved succesfully',
+      statusCode: 200,
+      message:
+        result.length === 0
+          ? 'No Data Found'
+          : 'Bookings retrieved succesfully',
       data: result,
     });
   } catch (error) {
@@ -48,22 +42,24 @@ const viewAllBookingsByUser: RequestHandler = async (req, res, next) => {
   try {
     const result = await BookingServices.viewAllBookingsByUserFromDB(req.user);
 
-    if (result.length === 0) {
-      sendResponse(res, {
-        success: false,
-        statusCode: 404,
-        message: 'No Data Found',
-        data: [],
-      });
-    }
-    sendResponse(res, {
+    return res.status(200).json({
       success: true,
-      statusCode: httpStatus.OK,
-      message: 'Bookings retrieved succesfully',
+      statusCode: 200,
+      message:
+        result.length === 0
+          ? 'No Data Found'
+          : 'Bookings retrieved succesfully',
       data: result,
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+   
+    res.status(404).json({
+      success: false,
+      statusCode: 404,
+      message: 'No Data Found',
+      data: [],
+    });
+    next()
   }
 };
 
@@ -99,10 +95,29 @@ const checkAvailability: RequestHandler = async (req, res, next) => {
   }
 };
 
+const paymentConfirmation: RequestHandler = async (
+  req,
+  res,
+  next,
+) => {
+  try {
+    const { transactionId } = req.query;
+
+    const result = await BookingServices.conformPayment(
+      transactionId as string,
+    );
+
+    res.send(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const BookingControllers = {
   createBooking,
   viewAllBookings,
   viewAllBookingsByUser,
   cancelBooking,
   checkAvailability,
+  paymentConfirmation,
 };

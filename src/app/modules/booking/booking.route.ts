@@ -19,7 +19,10 @@ router.get('/user', auth('user'), BookingControllers.viewAllBookingsByUser);
 
 router.delete('/:id', auth('user'), BookingControllers.cancelBooking);
 
-router.get('/check-availability', BookingControllers.checkAvailability);
+router.post('/check-availability', BookingControllers.checkAvailability);
+
+router.post('/confirmation', BookingControllers.paymentConfirmation);
+
 
 
 
